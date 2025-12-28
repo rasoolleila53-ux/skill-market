@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>بازارچه مهارتی نوجوانان</title>
+<style>
+body {
+    font-family: Tahoma, sans-serif;
+    background: #f4f6f8;
+    direction: rtl;
+    margin: 0;
+}
+header {
+    background: #1e3a8a;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+section {
+    max-width: 700px;
+    margin: 30px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+input, select, button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+}
+button {
+    background: #1e3a8a;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.member {
+    background: #eef2ff;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 6px;
+}
+.badge {
+    color: white;
+    background: #2563eb;
+    padding: 3px 8px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>بازارچه مهارتی نوجوانان</h1>
+<p>نسخه آزمایشی مدرسه‌ای</p>
+</header>
+
+<section>
+<h2>درباره طرح</h2>
+<p>
+این وب‌سایت نمونه آزمایشی یک بازارچه مهارتی امن برای نوجوانان است که با هدف
+افزایش خلاقیت، مسئولیت‌پذیری و آشنایی با مفاهیم اولیه کسب‌وکار طراحی شده است.
+</p>
+</section>
+
+<section>
+<h2>ثبت‌نام نوجوانان</h2>
+<input id="name" placeholder="نام">
+<input id="age" placeholder="سن">
+<select id="skill">
+<option>طراحی</option>
+<option>تدریس</option>
+<option>تولید محتوا</option>
+<option>برنامه‌نویسی</option>
+<option>سایر</option>
+</select>
+<button onclick="register()">ثبت مهارت</button>
+</section>
+
+<section>
+<h2>اعضای ثبت‌نام‌شده</h2>
+<div id="list"></div>
+</section>
+
+<script>
+let members = JSON.parse(localStorage.getItem("members")) || [];
+
+function register() {
+    let name = document.getElementById("name").value;
+    let age = document.getElementById("age").value;
+    let skill = document.getElementById("skill").value;
+
+    if (!name || !age) {
+        alert("لطفاً اطلاعات را کامل وارد کنید");
+        return;
+    }
+
+    members.push({name, age, skill, level: "سطح ۱"});
+    localStorage.setItem("members", JSON.stringify(members));
+    showMembers();
+}
+
+function showMembers() {
+    let list = document.getElementById("list");
+    list.innerHTML = "";
+    members.forEach(m => {
+        list.innerHTML += `
+        <div class="member">
+        <strong>${m.name}</strong> – ${m.skill}
+        <span class="badge">${m.level}</span>
+        </div>`;
+    });
+}
+
+showMembers();
+</script>
+
+</body>
+</html>
